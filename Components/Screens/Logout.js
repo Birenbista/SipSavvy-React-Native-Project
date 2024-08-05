@@ -18,10 +18,9 @@ export default function Logout() {
                 },
                 {
                     text: 'Yes',
+                    style: 'destructive',
                     onPress: () => {
-                        signOut(auth).then(() => {
-                            // You can add any additional logic here if needed
-                        })
+                        signOut(auth).then(() => {})
                     },
                 },
             ],

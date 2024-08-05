@@ -58,7 +58,6 @@ const CategoryItems = ({ route, navigation }) => {
     )
 
     const handleAddToCart = async item => {
-        // console.log(userId)
         const existingItem = cartLists.find(
             cartItem => cartItem.name === item.name
         )
@@ -118,21 +117,31 @@ const CategoryItems = ({ route, navigation }) => {
                 <View style={styles.cardGrid}>
                     {filteredData.map(item => (
                         <View key={item.id} style={styles.cardContainer}>
-                            <View>
-                                <View style={styles.cardInfo}>
-                                    <Image
-                                        style={styles.cardImage}
-                                        source={{ uri: item.image }}
-                                        resizeMode="contain"
-                                    />
-                                    <Text style={styles.cardText}>
-                                        {item.name} ({item.volume})
-                                    </Text>
-                                    <Text style={styles.cardText}>
-                                        ${item.price}/item
-                                    </Text>
-                                </View>
-                                <Pressable
+                            <Pressable
+                                onPress={() => handleAddToCart(item)}
+                                style={styles.overlayContainer}
+                            >
+                                <Ionicons
+                                    name="cart-outline"
+                                    size={40}
+                                    color="white"
+                                />
+                            </Pressable>
+
+                            <View style={styles.cardInfo}>
+                                <Image
+                                    style={styles.cardImage}
+                                    source={{ uri: item.image }}
+                                    resizeMode="contain"
+                                />
+                                <Text style={styles.cardText}>
+                                    {item.name} ({item.volume})
+                                </Text>
+                                <Text style={styles.cardText}>
+                                    ${item.price}/item
+                                </Text>
+
+                                {/* <Pressable
                                     onPress={() => handleAddToCart(item)}
                                     style={styles.buttonContainer}
                                 >
@@ -150,7 +159,7 @@ const CategoryItems = ({ route, navigation }) => {
                                             Add To Cart
                                         </Text>
                                     </View>
-                                </Pressable>
+                                </Pressable> */}
                             </View>
                         </View>
                     ))}

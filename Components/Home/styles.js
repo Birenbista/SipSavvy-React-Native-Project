@@ -36,10 +36,9 @@ export default styles = StyleSheet.create({
         elevation: 20,
         shadowColor: '#52006A',
     },
-
     cardInfo: {
         display: 'flex',
-        gap: 5,
+        gap: 1,
     },
     cardImage: {
         width: '100%',
@@ -55,28 +54,10 @@ export default styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'column',
         padding: 10,
-        // justifyContent: 'space-between',
         gap: 16,
         marginBottom: 5,
     },
-    buttonContainer: {
-        position: 'absolute',
-        opacity: 0.7,
-        top: '50%',
-        width: '100%',
-        backgroundColor: '#102C57',
-    },
-    addToCart: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignSelf: 'center',
-    },
-    buttonText: {
-        alignSelf: 'center',
-        fontSize: 18,
-        padding: 4,
-        color: 'white',
-    },
+
     searchInput: {
         backgroundColor: '#102C57',
         height: 40,
@@ -84,5 +65,17 @@ export default styles = StyleSheet.create({
         padding: 5,
         margin: 2,
         borderRadius: 5,
+    },
+    overlayContainer: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 1,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#102C57',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })

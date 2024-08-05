@@ -87,11 +87,9 @@ const LoginScreen = ({ navigation }) => {
                     </Text>
                     <Pressable onPress={() => navigation.navigate('Register')}>
                         <Text
-                            style={{
-                                color: '#37B7C3',
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                            }}
+                            style={styles.btnAuth}
+                               
+                       
                         >
                             Sign Up
                         </Text>

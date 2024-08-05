@@ -20,7 +20,6 @@ const CartScreen = () => {
                 options={commonHeaderOptions}
             />
         </CartStack.Navigator>
-        // <CartList />
     )
 }
 

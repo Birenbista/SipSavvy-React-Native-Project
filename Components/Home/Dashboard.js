@@ -9,7 +9,6 @@ import {
     ActivityIndicator,
     ScrollView,
 } from 'react-native'
-// import * as SplashScreen from 'expo-splash-screen'
 import styles from './styles'
 
 const Dashboard = ({ navigation }) => {
@@ -45,37 +44,26 @@ const Dashboard = ({ navigation }) => {
             <ScrollView>
                 <View style={styles.cardGrid}>
                     {data.map(item => (
-                        <View key={item.id} style={styles.cardContainer}>
-                            <View>
-                                <View style={styles.cardInfo}>
-                                    <Image
-                                        style={styles.cardImage}
-                                        source={{
-                                            uri: item.image,
-                                        }}
-                                        resizeMode="contain"
-                                    />
-                                    <Text style={styles.cardText}>
-                                        {item.id}
-                                    </Text>
-                                </View>
-                                <Pressable
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            'CategoryProducts',
-                                            {
-                                                category: item.id,
-                                            }
-                                        )
-                                    }
-                                    style={styles.buttonContainer}
-                                >
-                                    <Text style={styles.buttonText}>
-                                        View Items
-                                    </Text>
-                                </Pressable>
+                        <Pressable
+                            key={item.id}
+                            onPress={() =>
+                                navigation.navigate('CategoryProducts', {
+                                    category: item.id,
+                                })
+                            }
+                            style={styles.cardContainer} // Apply the same styles
+                        >
+                            <View style={styles.cardInfo}>
+                                <Image
+                                    style={styles.cardImage}
+                                    source={{
+                                        uri: item.image,
+                                    }}
+                                    resizeMode="contain"
+                                />
+                                <Text style={styles.cardText}>{item.id}</Text>
                             </View>
-                        </View>
+                        </Pressable>
                     ))}
                 </View>
             </ScrollView>

@@ -19,11 +19,12 @@ const CartList = ({ navigation }) => {
 
     const handleRemoveItem = itemID => {
         Alert.alert(
-            'Remove Task',
-            'This action will permanently delete this task. This action cannot be undone!',
+            'Delete Item',
+            'Are you sure you want to delete the item?',
             [
                 {
                     text: 'Confirm',
+                    style: 'destructive',
                     onPress: async () => {
                         dispatch(removeData(itemID))
                         const deleted = await database.remove(userId, itemID)
@@ -69,26 +70,10 @@ const CartList = ({ navigation }) => {
         setTotal(total.toFixed(2))
     }, [cartLists])
 
-    // const handleCheckout = () => {
-    //     if (cartLists.length > 0) {
-    //         // Perform checkout logic here
-    //         // Clear cart
-    //         cartLists.forEach(item => {
-    //             dispatch(removeData(item.id))
-    //             database.remove(item.id)
-    //         })
-    //         setTotal(0)
-    //         // Navigate to checkout screen
-    //     } else {
-    //         Alert.alert('Cart is empty!')
-    //     }
-    // }
-
     const handleEmptyCart = () => {
         if (cartLists.length > 0) {
             navigation.navigate('Checkout', {
                 totalAmount: total,
-                // handleCheckout: handleCheckout,
             })
         } else {
             Alert.alert(

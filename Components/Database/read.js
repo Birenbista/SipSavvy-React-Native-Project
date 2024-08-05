@@ -13,7 +13,6 @@ export async function loadproducts(category) {
             id: doc.id,
         })
     })
-    console.log(data)
     return data
 }
 
