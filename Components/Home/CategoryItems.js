@@ -113,7 +113,7 @@ const CategoryItems = ({ route, navigation }) => {
                 onChangeText={text => setSearchQuery(text)}
                 value={searchQuery}
             />
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
                 <View style={styles.cardGrid}>
                     {filteredData.map(item => (
                         <View key={item.id} style={styles.cardContainer}>
@@ -140,26 +140,6 @@ const CategoryItems = ({ route, navigation }) => {
                                 <Text style={styles.cardText}>
                                     ${item.price}/item
                                 </Text>
-
-                                {/* <Pressable
-                                    onPress={() => handleAddToCart(item)}
-                                    style={styles.buttonContainer}
-                                >
-                                    <View style={styles.addToCart}>
-                                        <Ionicons
-                                            name="cart-outline"
-                                            size={24}
-                                            color="white"
-                                            style={{
-                                                alignSelf: 'center',
-                                                padding: 4,
-                                            }}
-                                        />
-                                        <Text style={styles.buttonText}>
-                                            Add To Cart
-                                        </Text>
-                                    </View>
-                                </Pressable> */}
                             </View>
                         </View>
                     ))}
