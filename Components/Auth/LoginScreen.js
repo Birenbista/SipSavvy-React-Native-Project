@@ -5,16 +5,13 @@ import {
     TextInput,
     Pressable,
     View,
-    Image,
     Alert,
 } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../Database/config'
 
 const LoginScreen = ({ navigation }) => {
-    // const insets = useSafeAreaInsets()
     const [email, setEmailChange] = useState('')
     const [password, setPasswordChange] = useState('')
 
@@ -28,11 +25,8 @@ const LoginScreen = ({ navigation }) => {
             Alert.alert('Enter email and password to sign in!')
         } else {
             signInWithEmailAndPassword(auth, email, password)
-                .then(userCredential => {
-                    // Login successful
-                })
+                .then(userCredential => {})
                 .catch(error => {
-                    // console.error('Error logging in:', error.message);
                     setEmailChange('')
                     setPasswordChange('')
                     Alert.alert(
@@ -44,11 +38,6 @@ const LoginScreen = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={styles.SafeAreaView}>
-            {/* <Image
-                source={require('../../assets/logo.png')}
-                style={styles.logo}
-            /> */}
-
             <View style={{ marginTop: 90 }}>
                 <Text
                     style={{
@@ -86,17 +75,10 @@ const LoginScreen = ({ navigation }) => {
                         Don't have an account yet?
                     </Text>
                     <Pressable onPress={() => navigation.navigate('Register')}>
-                        <Text
-                            style={styles.btnAuth}
-                               
-                       
-                        >
-                            Sign Up
-                        </Text>
+                        <Text style={styles.btnAuth}>Sign Up</Text>
                     </Pressable>
                 </View>
             </View>
-            {/* </View> */}
         </SafeAreaView>
     )
 }

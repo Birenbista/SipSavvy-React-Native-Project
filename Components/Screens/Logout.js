@@ -2,11 +2,12 @@ import React, { useCallback } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../Database/config'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { Alert } from 'react-native'
+import { Alert, View } from 'react-native'
 
 export default function Logout() {
     const navigation = useNavigation()
     const handleLogout = () => {
+        navigation.navigate('HomeScreen')
         Alert.alert(
             'Confirm Logout',
             'Are you sure you want to logout?',
@@ -20,7 +21,9 @@ export default function Logout() {
                     text: 'Yes',
                     style: 'destructive',
                     onPress: () => {
-                        signOut(auth).then(() => {})
+                        signOut(auth).then(() => {
+                            navigation.navigate('HomeScreen')
+                        })
                     },
                 },
             ],

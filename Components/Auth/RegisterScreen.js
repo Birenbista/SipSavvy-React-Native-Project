@@ -5,7 +5,6 @@ import {
     TextInput,
     View,
     Alert,
-    Image,
     Pressable,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -31,8 +30,6 @@ const RegisterScreen = ({ navigation }) => {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
                     const user = userCredential.user
-                    console.log('User account created:', user.uid)
-                    // navigation.navigate('Login')
                     Alert.alert('Signed Up Successfully')
                 })
                 .catch(error => {
@@ -48,11 +45,6 @@ const RegisterScreen = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={styles.SafeAreaView}>
-            {/* <View style={{ display: 'flex', flexDirection: 'column' }}> */}
-            {/* <Image
-                source={require('../../assets/logo.png')}
-                style={styles.logo}
-            /> */}
             <View style={{ marginTop: 90 }}>
                 <Text
                     style={{
@@ -94,8 +86,6 @@ const RegisterScreen = ({ navigation }) => {
                     <Text style={styles.btnAuth}>Sign in</Text>
                 </Pressable>
             </View>
-
-            {/* </View> */}
         </SafeAreaView>
     )
 }
