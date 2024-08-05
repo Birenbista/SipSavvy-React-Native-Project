@@ -51,7 +51,7 @@ const Dashboard = ({ navigation }) => {
                                     category: item.id,
                                 })
                             }
-                            style={styles.cardContainer} // Apply the same styles
+                            style={styles.cardContainer}
                         >
                             <View style={styles.cardInfo}>
                                 <Image
