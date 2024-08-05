@@ -39,6 +39,10 @@ const RegisterScreen = ({ navigation }) => {
                         Alert.alert(
                             'Error: Password must be at leat 6 character'
                         )
+                    }else if (error.code === 'auth/email-already-in-use'){
+                        Alert.alert('Error: The email address is already in use by another account.')
+                    }else {
+                        Alert.alert('Error: Something went wrong')
                     }
                 })
         }
