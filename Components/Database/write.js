@@ -9,8 +9,6 @@ import { db } from './config'
 
 export async function saveProduct(userId, data) {
     try {
-        console.log(userId)
-        console.log('This is data', data)
         const dbCollection = collection(db, `users/${userId}/cartList`)
         const docRef = await addDoc(dbCollection, data)
         return docRef.id
@@ -34,5 +32,15 @@ export async function update(userId, id, data) {
         return true
     } catch (e) {
         return false
+    }
+}
+
+export async function saveOrder(userId, orderData) {
+    try {
+        const dbCollection = collection(db, `users/${userId}/orders`)
+        const docRef = await addDoc(dbCollection, orderData)
+        return docRef.id
+    } catch (e) {
+        console.error('Error adding order: ', e)
     }
 }

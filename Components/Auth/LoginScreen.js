@@ -84,20 +84,18 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.buttonContainer}>
                     <Text style={{ fontSize: 18, margin: 5, color: 'white' }}>
                         Don't have an account yet?
-                        <Pressable
-                            onPress={() => navigation.navigate('Register')}
-                        >
-                            <Text
-                                style={{
-                                    color: '#37B7C3',
-                                    fontSize: 16,
-                                    fontWeight: 'bold',
-                                }}
-                            >
-                                Sign Up
-                            </Text>
-                        </Pressable>
                     </Text>
+                    <Pressable onPress={() => navigation.navigate('Register')}>
+                        <Text
+                            style={{
+                                color: '#37B7C3',
+                                fontSize: 18,
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            Sign Up
+                        </Text>
+                    </Pressable>
                 </View>
             </View>
             {/* </View> */}

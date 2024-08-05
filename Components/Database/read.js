@@ -42,3 +42,17 @@ export async function loadCartItems(userId) {
     })
     return data
 }
+
+export const loadOrders = async userId => {
+    const data = []
+    const querySnapshot = await getDocs(
+        collection(db, `users/${userId}/orders`)
+    )
+    querySnapshot.forEach(doc => {
+        data.push({
+            ...doc.data(),
+            id: doc.id,
+        })
+    })
+    return data
+}

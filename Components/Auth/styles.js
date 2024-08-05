@@ -44,9 +44,18 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20,
+        alignContent: 'center',
+        gap: 2,
+        flexDirection: 'row',
+    },
+    btnAuth: {
+        color: '#37B7C3',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 
     buttonText: {

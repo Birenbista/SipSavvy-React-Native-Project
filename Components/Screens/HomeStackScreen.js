@@ -22,7 +22,7 @@ const HomeStackScreen = () => {
             <HomeStack.Screen
                 name="CategoryProducts"
                 component={CategoryItems}
-                options={commonHeaderOptions}
+                options={{ ...commonHeaderOptions, title: 'Category Products' }}
             />
         </HomeStack.Navigator>
     )

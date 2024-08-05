@@ -50,7 +50,9 @@ const Dashboard = ({ navigation }) => {
                                 <View style={styles.cardInfo}>
                                     <Image
                                         style={styles.cardImage}
-                                        src={`https://drive.google.com/uc?export=view&id=${item.image}`}
+                                        source={{
+                                            uri: item.image,
+                                        }}
                                         resizeMode="contain"
                                     />
                                     <Text style={styles.cardText}>

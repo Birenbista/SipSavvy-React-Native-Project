@@ -2,21 +2,41 @@ import React from 'react'
 import { View, Text, TextInput, Pressable, Alert } from 'react-native'
 import styles from './styles'
 import { useState } from 'react'
+import { getAuth } from 'firebase/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import * as database from '../Database'
+import { removeData } from '../Redux/CartListSlice'
+
+const postalCodeRegex = /^[A-Z0-9]{3} [A-Z0-9]{3}$/i
+const phoneNumberRegex = /^\d{10}$/
 
 const Checkout = ({ route, navigation }) => {
-    const { totalAmount, handleCheckout } = route.params
+    const { totalAmount } = route.params
     const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
     const [postalCode, setPostalCode] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [confirmed, setConfirmed] = useState(false)
+
+    const auth = getAuth()
+    const user = auth.currentUser
+    const userId = user ? user.uid : null
+    const cartLists = useSelector(state => state.cartList.list)
+    const dispatch = useDispatch()
 
     const handleOrderConfirmation = () => {
         if (totalAmount <= 0) {
             Alert.alert(
                 'No items in the Cart. Please add items to place order.'
             )
-        } else if (!address || !city || !postalCode) {
-            Alert.alert('Please fill in all fields')
+        } else if (!address.trim()) {
+            Alert.alert('Please enter your address.')
+        } else if (!city.trim()) {
+            Alert.alert('Please enter your city.')
+        } else if (!postalCode.trim() || !postalCodeRegex.test(postalCode)) {
+            Alert.alert('Please enter a valid postal code.')
+        } else if (!phoneNumber.trim() || !phoneNumberRegex.test(phoneNumber)) {
+            Alert.alert('Please enter a valid phone number.')
         } else {
             Alert.alert('Confirm Order', 'Are your sure?', [
                 {
@@ -25,8 +45,25 @@ const Checkout = ({ route, navigation }) => {
                         setAddress('')
                         setCity('')
                         setPostalCode('')
+                        setPhoneNumber('')
                         setConfirmed(true)
-                        handleCheckout()
+                        // handleCheckout()
+
+                        const orderData = {
+                            address,
+                            city,
+                            postalCode,
+                            phoneNumber,
+                            totalAmount,
+                            items: cartLists,
+                            orderDate: new Date().toISOString(),
+                        }
+                        await database.saveOrder(userId, orderData)
+
+                        cartLists.forEach(item => {
+                            dispatch(removeData(item.id))
+                            database.remove(userId, item.id)
+                        })
                         navigation.goBack()
                     },
                 },
@@ -59,6 +96,12 @@ const Checkout = ({ route, navigation }) => {
                 style={styles.input}
                 value={postalCode}
                 onChangeText={setPostalCode}
+            />
+            <TextInput
+                placeholder="Enter Phone Number"
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
             />
             {confirmed ? (
                 <Text style={styles.totalAmountText}>Total: $0</Text>

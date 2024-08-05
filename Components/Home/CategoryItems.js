@@ -34,7 +34,6 @@ const CategoryItems = ({ route, navigation }) => {
             try {
                 setLoadingData(true)
                 const fetchedData = await database.loadproducts(category)
-                console.log(fetchedData)
                 setData(fetchedData)
                 const timeout = setTimeout(() => {
                     setLoadingData(false)
@@ -59,7 +58,7 @@ const CategoryItems = ({ route, navigation }) => {
     )
 
     const handleAddToCart = async item => {
-        console.log(userId)
+        // console.log(userId)
         const existingItem = cartLists.find(
             cartItem => cartItem.name === item.name
         )
@@ -86,6 +85,7 @@ const CategoryItems = ({ route, navigation }) => {
                 name: item.name,
                 price: item.price,
                 volume: item.volume,
+                imageURL: item.image,
                 quantity: 1,
             }
             try {
@@ -122,7 +122,7 @@ const CategoryItems = ({ route, navigation }) => {
                                 <View style={styles.cardInfo}>
                                     <Image
                                         style={styles.cardImage}
-                                        src={`https://drive.google.com/uc?export=view&id=${item.image}`}
+                                        source={{ uri: item.image }}
                                         resizeMode="contain"
                                     />
                                     <Text style={styles.cardText}>

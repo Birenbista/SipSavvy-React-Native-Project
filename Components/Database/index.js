@@ -1,2 +1,2 @@
-export { loadproducts, loadCategories, loadCartItems } from './read'
-export { saveProduct, update, remove } from './write'
+export { loadproducts, loadCategories, loadCartItems, loadOrders } from './read'
+export { saveProduct, update, remove, saveOrder } from './write'

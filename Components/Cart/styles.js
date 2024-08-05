@@ -20,14 +20,12 @@ export default styles = StyleSheet.create({
     },
     listItemContainer: {
         width: '100%',
-        display: 'flex',
         marginBottom: 10,
     },
     listItem: {
-        padding: 10,
+        padding: 5,
         backgroundColor: 'white',
         width: '100%',
-        gap: 10,
         borderRadius: 10,
         display: 'flex',
         flexDirection: 'row',
@@ -65,5 +63,24 @@ export default styles = StyleSheet.create({
     buttonText: {
         fontSize: 16,
         color: 'white',
+    },
+    cartListContainer: {
+        diplay: 'flex',
+        flexDirection: 'column',
+    },
+
+    cartImage: {
+        width: 80,
+        height: 80,
+    },
+    emptyMessageContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyMessage: {
+        fontSize: 18,
+
+        color: 'gray',
     },
 })

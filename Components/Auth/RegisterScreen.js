@@ -89,18 +89,10 @@ const RegisterScreen = ({ navigation }) => {
             <View style={styles.buttonContainer}>
                 <Text style={{ fontSize: 18, margin: 5, color: 'white' }}>
                     Already have an account?
-                    <Pressable onPress={() => navigation.navigate('Login')}>
-                        <Text
-                            style={{
-                                color: '#37B7C3',
-                                fontSize: 16,
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Sign in
-                        </Text>
-                    </Pressable>
                 </Text>
+                <Pressable onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.btnAuth}>Sign in</Text>
+                </Pressable>
             </View>
 
             {/* </View> */}

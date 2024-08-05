@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pressable, ScrollView, Text, View, Alert } from 'react-native'
+import { Pressable, ScrollView, Text, View, Alert, Image } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as database from '../Database'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,10 +16,8 @@ const CartList = ({ navigation }) => {
     const auth = getAuth()
     const user = auth.currentUser
     const userId = user ? user.uid : null
-    // console.log(cartLists)
 
     const handleRemoveItem = itemID => {
-        // console.log('itemID ====> ', itemID)
         Alert.alert(
             'Remove Task',
             'This action will permanently delete this task. This action cannot be undone!',
@@ -71,26 +69,26 @@ const CartList = ({ navigation }) => {
         setTotal(total.toFixed(2))
     }, [cartLists])
 
-    const handleCheckout = () => {
-        if (cartLists.length > 0) {
-            // Perform checkout logic here
-            // Clear cart
-            cartLists.forEach(item => {
-                dispatch(removeData(item.id))
-                database.remove(item.id)
-            })
-            setTotal(0)
-            // Navigate to checkout screen
-        } else {
-            Alert.alert('Cart is empty!')
-        }
-    }
+    // const handleCheckout = () => {
+    //     if (cartLists.length > 0) {
+    //         // Perform checkout logic here
+    //         // Clear cart
+    //         cartLists.forEach(item => {
+    //             dispatch(removeData(item.id))
+    //             database.remove(item.id)
+    //         })
+    //         setTotal(0)
+    //         // Navigate to checkout screen
+    //     } else {
+    //         Alert.alert('Cart is empty!')
+    //     }
+    // }
 
     const handleEmptyCart = () => {
         if (cartLists.length > 0) {
             navigation.navigate('Checkout', {
                 totalAmount: total,
-                handleCheckout: handleCheckout,
+                // handleCheckout: handleCheckout,
             })
         } else {
             Alert.alert(
@@ -104,94 +102,102 @@ const CartList = ({ navigation }) => {
             <View style={styles.header}>
                 <Text style={styles.headerText}>Cart Items</Text>
             </View>
-            <ScrollView
-                style={{ width: '100%', marginBottom: 10, padding: 10 }}
-            >
-                <View>
-                    {cartLists.map(item => (
-                        <View
-                            key={item.id}
-                            style={{
-                                width: '100%',
-                                display: 'flex',
-                                marginBottom: 10,
-                            }}
-                        >
-                            <View key={item.id} style={styles.listItem}>
-                                <View style={{ display: 'flex', gap: 7 }}>
-                                    <Text style={styles.itemText}>
-                                        {item.name} ({item.volume})
-                                    </Text>
-                                    <Text style={styles.itemText}>
-                                        ${item.price}/item
-                                    </Text>
-                                    <View style={styles.quantityContainer}>
-                                        <Pressable
-                                            onPress={() =>
-                                                handleDecreaseQuantity(item)
-                                            }
-                                        >
-                                            <Ionicons
-                                                name="remove-circle-outline"
-                                                size={24}
-                                                color="black"
-                                            />
-                                        </Pressable>
-                                        <Text
-                                            style={{
-                                                fontSize: 16,
-                                                textTransform: 'capitalize',
-                                                alignItems: 'center',
-                                            }}
-                                        >
-                                            {item.quantity}
-                                        </Text>
-                                        <Pressable
-                                            onPress={() =>
-                                                handleIncreaseQuantity(item)
-                                            }
-                                        >
-                                            <Ionicons
-                                                name="add-circle-outline"
-                                                size={24}
-                                                color="black"
-                                            />
-                                        </Pressable>
-                                    </View>
-                                </View>
-                                <Pressable
-                                    onPress={() => handleRemoveItem(item.id)}
-                                >
-                                    <Ionicons
-                                        name="trash-outline"
-                                        size={24}
-                                        color="black"
-                                    />
-                                </Pressable>
-                            </View>
-                        </View>
-                    ))}
+            {cartLists.length === 0 ? (
+                <View style={styles.emptyMessageContainer}>
+                    <Text style={styles.emptyMessage}>Cart is empty!</Text>
                 </View>
-            </ScrollView>
-            <View style={styles.buttonContainer}>
-                <Pressable
-                    style={styles.button}
-                    onPress={() => {
-                        handleEmptyCart()
-                    }}
-                >
-                    <View
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            gap: 30,
-                        }}
-                    >
-                        <Text style={styles.buttonText}>Checkout</Text>
-                        <Text style={styles.buttonText}>Total: ${total}</Text>
+            ) : (
+                <ScrollView style={{ padding: 10 }}>
+                    <View>
+                        {cartLists.map(item => (
+                            <View
+                                key={item.id}
+                                style={styles.listItemContainer}
+                            >
+                                <View key={item.id} style={styles.listItem}>
+                                    <View
+                                        style={{
+                                            flex: 1,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Image
+                                            style={styles.cartImage}
+                                            source={{ uri: item.imageURL }}
+                                            resizeMode="contain"
+                                        />
+                                        <View style={{ marginLeft: 10 }}>
+                                            <Text style={styles.itemText}>
+                                                {item.name} ({item.volume})
+                                            </Text>
+                                            <Text style={styles.itemText}>
+                                                ${item.price}/item
+                                            </Text>
+                                            <View
+                                                style={styles.quantityContainer}
+                                            >
+                                                <Pressable
+                                                    onPress={() =>
+                                                        handleDecreaseQuantity(
+                                                            item
+                                                        )
+                                                    }
+                                                >
+                                                    <Ionicons
+                                                        name="remove-circle-outline"
+                                                        size={24}
+                                                        color="black"
+                                                    />
+                                                </Pressable>
+                                                <Text style={{ fontSize: 16 }}>
+                                                    {item.quantity}
+                                                </Text>
+                                                <Pressable
+                                                    onPress={() =>
+                                                        handleIncreaseQuantity(
+                                                            item
+                                                        )
+                                                    }
+                                                >
+                                                    <Ionicons
+                                                        name="add-circle-outline"
+                                                        size={24}
+                                                        color="black"
+                                                    />
+                                                </Pressable>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    <Pressable
+                                        onPress={() =>
+                                            handleRemoveItem(item.id)
+                                        }
+                                    >
+                                        <Ionicons
+                                            name="trash-outline"
+                                            size={30}
+                                            color="black"
+                                        />
+                                    </Pressable>
+                                </View>
+                            </View>
+                        ))}
                     </View>
-                </Pressable>
-            </View>
+                </ScrollView>
+            )}
+            {cartLists.length > 0 && (
+                <View style={styles.buttonContainer}>
+                    <Pressable style={styles.button} onPress={handleEmptyCart}>
+                        <View style={{ flexDirection: 'row', gap: 30 }}>
+                            <Text style={styles.buttonText}>Checkout</Text>
+                            <Text style={styles.buttonText}>
+                                Total: ${total}
+                            </Text>
+                        </View>
+                    </Pressable>
+                </View>
+            )}
         </View>
     )
 }

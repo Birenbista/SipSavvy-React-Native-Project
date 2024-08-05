@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { Provider, useSelector } from 'react-redux'
 import { app } from './Components/Database/config'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -12,10 +11,13 @@ import RegisterScreen from './Components/Auth/RegisterScreen'
 import LoginScreen from './Components/Auth/LoginScreen'
 import HomeStackScreen from './Components/Screens/HomeStackScreen'
 import CartScreen from './Components/Screens/CartScreen'
-import SettingScreen from './Components/Screens/SettingsScreen'
-import CategoryItems from './Components/Home/CategoryItems'
 import { store } from './Components/Redux/store'
 import AppLoader from './Components/AppLoader'
+import * as SplashScreen from 'expo-splash-screen'
+import OrderHistoryScreen from './Components/Screens/OrderHistoryScreen'
+import Logout from './Components/Screens/Logout'
+
+SplashScreen.preventAutoHideAsync()
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -26,18 +28,33 @@ function AppWrapper() {
 
     const auth = getAuth(app)
     const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-    // Handle user state changes
     const onAuthStateChangedHandler = user => {
         setUser(user)
-
-        // SplashScreen.hideAsync()
+        setLoading(false)
+        SplashScreen.hideAsync()
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, onAuthStateChangedHandler)
         return unsubscribe
-    }, [])
+    }, [auth])
+
+    if (loading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#102C57',
+                }}
+            >
+                <ActivityIndicator size="large" color="#fff" />
+            </View>
+        )
+    }
 
     return (
         <NavigationContainer>
@@ -49,13 +66,18 @@ function AppWrapper() {
 
                             if (route.name === 'HomeScreen') {
                                 iconName = focused ? 'home' : 'home-outline'
-                            } else if (route.name === 'Settings') {
-                                iconName = focused ? 'settings' : 'settings'
                             } else if (route.name === 'CartScreen') {
                                 iconName = focused ? 'cart' : 'cart-outline'
+                            } else if (route.name === 'Order History') {
+                                iconName = focused
+                                    ? 'document-text'
+                                    : 'document-text-outline'
+                            } else if (route.name === 'Logout') {
+                                iconName = focused
+                                    ? 'log-out'
+                                    : 'log-out-outline'
                             }
 
-                            // You can return any component that you like here!
                             return (
                                 <Ionicons
                                     name={iconName}
@@ -72,8 +94,8 @@ function AppWrapper() {
                             backgroundColor: '#102C57',
                         },
                         tabBarBadgeStyle: {
-                            color: 'black', // Change this to your desired color
-                            backgroundColor: '#ffffff', // Optional: Change badge background color
+                            color: 'black',
+                            backgroundColor: '#ffffff',
                         },
                     })}
                 >
@@ -84,10 +106,17 @@ function AppWrapper() {
                         component={CartScreen}
                     />
                     <Tab.Screen
-                        name="Settings"
-                        options={{ headerShown: true }}
-                        component={SettingScreen}
+                        name="Order History"
+                        options={{
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#102C57',
+                            },
+                            headerTintColor: '#fff',
+                        }}
+                        component={OrderHistoryScreen}
                     />
+                    <Tab.Screen name="Logout" component={Logout} />
                 </Tab.Navigator>
             ) : (
                 <Stack.Navigator>
